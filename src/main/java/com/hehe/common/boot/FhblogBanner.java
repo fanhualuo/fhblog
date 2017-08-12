@@ -1,4 +1,4 @@
-package com.hehe.fhblog.common.boot;
+package com.hehe.common.boot;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.ansi.AnsiColor;

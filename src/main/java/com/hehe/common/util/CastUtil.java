@@ -1,4 +1,4 @@
-package com.hehe.fhblog.common.util;
+package com.hehe.common.util;
 
 /**
  * Date: 2017/8/12

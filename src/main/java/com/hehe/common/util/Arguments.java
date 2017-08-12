@@ -1,4 +1,4 @@
-package com.hehe.fhblog.common.util;
+package com.hehe.common.util;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
