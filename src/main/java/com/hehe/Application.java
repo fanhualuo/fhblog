@@ -1,4 +1,4 @@
-package com.hehe.fhblog;
+package com.hehe;
 
 import com.hehe.common.boot.FhblogBanner;
 import org.springframework.boot.SpringApplication;

@@ -11,13 +11,13 @@ import java.io.PrintStream;
 public class FhblogBanner implements Banner{
     private static final String[] BANNER = {"",
             "                                                                \n" +
-                    "   █    █    ████     █    █    ████     \n" +
-                    "   █    █    █          █    █     █        \n" +
-                    "   █    █    █          █    █     █        \n" +
-                    "   ████    ████     ████     ████                   \n" +
-                    "   █    █    █          █    █     █                     \n" +
-                    "   █    █    █          █    █     █             \n" +
-                    "   █    █    ████     █    █     ████                 \n" +
+                    "   █    █    ████    █    █    ████     \n" +
+                    "   █    █    █         █    █     █        \n" +
+                    "   █    █    █         █    █     █        \n" +
+                    "   ████    ████    ████     ████                   \n" +
+                    "   █    █    █         █    █     █                     \n" +
+                    "   █    █    █         █    █     █             \n" +
+                    "   █    █    ████    █    █     ████                 \n" +
                     "                                                                \n"
     };
 
