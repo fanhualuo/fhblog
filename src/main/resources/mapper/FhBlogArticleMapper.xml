@@ -1,0 +1,158 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.haier.link.point.mapper.FhBlogArticleMapper">
+
+    <resultMap id="FhBlogArticle" type="com.haier.link.point.model.FhBlogArticle">
+        <id column="id" property="id"/>
+                <result column="tag_ids" property="tagIds"/>
+                <result column="coverImg" property="coverImg"/>
+                <result column="description" property="description"/>
+                <result column="title" property="title"/>
+                <result column="created_by" property="createdBy"/>
+                <result column="content" property="content"/>
+                <result column="is_top" property="isTop"/>
+                <result column="hits" property="hits"/>
+                <result column="user_id" property="userId"/>
+                <result column="is_del" property="isDel"/>
+                <result column="updated_by" property="updatedBy"/>
+                <result column="category_ids" property="categoryIds"/>
+                <result column="status" property="status"/>
+            </resultMap>
+
+    <sql id="table">
+        `fh_blog_article`
+    </sql>
+
+    <sql id="values">
+                #{userId},
+                #{title},
+                #{description},
+                #{content},
+                #{coverImg},
+                #{categoryIds},
+                #{tagIds},
+                #{status},
+                #{isTop},
+                #{hits},
+                #{isDel},
+                #{createdBy},
+                #{updatedBy},
+                NOW(),
+        NOW()
+    </sql>
+
+    <sql id="columns">
+                `user_id`,
+                `title`,
+                `description`,
+                `content`,
+                `coverImg`,
+                `category_ids`,
+                `tag_ids`,
+                `status`,
+                `is_top`,
+                `hits`,
+                `is_del`,
+                `created_by`,
+                `updated_by`,
+            </sql>
+
+    <insert id="insert">
+        INSERT INTO
+        <include refid="table"/>(<include refid="columns"/>)
+        VALUES (<include refid="values"/>)
+    </insert>
+
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE `id` = #{id}
+    </delete>
+
+    <delete id="deleteByField" parameterType="map">
+        DELETE FROM
+        <include refid="table"/>
+        WHERE `${field}` = #{val}
+    </delete>
+
+    <select id="findOneById" resultMap="FhBlogArticle">
+        SELECT * FROM
+        <include refid="table"/>
+        WHERE `id` = #{id}
+        LIMIT 1
+    </select>
+
+    <select id="findOneByField" parameterType="map" resultMap="FhBlogArticle">
+        SELECT * FROM
+        <include refid="table"/>
+        WHERE `${field}` = #{val}
+        LIMIT 1
+    </select>
+
+    <select id="findAll" resultMap="FhBlogArticle">
+        SELECT * FROM
+        <include refid="table"/>
+    </select>
+
+    <select id="findByField" parameterType="map" resultMap="FhBlogArticle">
+        SELECT * FROM
+        <include refid="table"/>
+        WHERE `${field}` = #{val}
+    </select>
+
+    <update id="updateById">
+        UPDATE
+        <include refid="table"/>
+        <set>
+                        <if test="object.tagIds != null">`tag_ids`=#{object.tagIds},</if>
+                        <if test="object.coverImg != null">`coverImg`=#{object.coverImg},</if>
+                        <if test="object.description != null">`description`=#{object.description},</if>
+                        <if test="object.title != null">`title`=#{object.title},</if>
+                        <if test="object.createdBy != null">`created_by`=#{object.createdBy},</if>
+                        <if test="object.content != null">`content`=#{object.content},</if>
+                        <if test="object.isTop != null">`is_top`=#{object.isTop},</if>
+                        <if test="object.hits != null">`hits`=#{object.hits},</if>
+                        <if test="object.userId != null">`user_id`=#{object.userId},</if>
+                        <if test="object.isDel != null">`is_del`=#{object.isDel},</if>
+                        <if test="object.updatedBy != null">`updated_by`=#{object.updatedBy},</if>
+                        <if test="object.categoryIds != null">`category_ids`=#{object.categoryIds},</if>
+                        <if test="object.status != null">`status`=#{object.status},</if>
+                        `updated_at` = NOW()
+        </set>
+        WHERE `id`=#{id}
+    </update>
+
+    <update id="updateByField" parameterType="map">
+        UPDATE
+        <include refid="table"/>
+        <set>
+                        <if test="tagIds != null">`tag_ids`=#{tagIds},</if>
+                        <if test="coverImg != null">`coverImg`=#{coverImg},</if>
+                        <if test="description != null">`description`=#{description},</if>
+                        <if test="title != null">`title`=#{title},</if>
+                        <if test="createdBy != null">`created_by`=#{createdBy},</if>
+                        <if test="content != null">`content`=#{content},</if>
+                        <if test="isTop != null">`is_top`=#{isTop},</if>
+                        <if test="hits != null">`hits`=#{hits},</if>
+                        <if test="userId != null">`user_id`=#{userId},</if>
+                        <if test="isDel != null">`is_del`=#{isDel},</if>
+                        <if test="updatedBy != null">`updated_by`=#{updatedBy},</if>
+                        <if test="categoryIds != null">`category_ids`=#{categoryIds},</if>
+                        <if test="status != null">`status`=#{status},</if>
+                        `updated_at` = NOW()
+        </set>
+        WHERE `${field}`=#{val}
+    </update>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM
+        <include refid="table"/>
+    </select>
+
+    <select id="countByField" resultType="long">
+        SELECT COUNT(*) FROM
+        <include refid="table"/>
+        WHERE `${field}`=#{val}
+    </select>
+
+</mapper>
