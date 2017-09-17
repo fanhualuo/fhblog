@@ -1,0 +1,135 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FhUser">
+    <resultMap id="FhUserMap" type="FhUser">
+        <id column="id" property="id"/>
+                <result column="headImg" property="headImg"/>
+                <result column="sex" property="sex"/>
+                <result column="type" property="type"/>
+                <result column="created_by" property="createdBy"/>
+                <result column="password" property="password"/>
+                <result column="phone" property="phone"/>
+                <result column="name" property="name"/>
+                <result column="updated_by" property="updatedBy"/>
+                <result column="email" property="email"/>
+                <result column="age" property="age"/>
+                <result column="desc" property="desc"/>
+                <result column="hobby" property="hobby"/>
+                <result column="status" property="status"/>
+                <result property="createdBy" column="created_by"/>
+                <result property="updatedBy" column="updated_by"/>
+                <result property="createdAt" column="created_at"/>
+                <result property="updatedAt" column="updated_at"/>
+            </resultMap>
+
+    <sql id="table">
+        `fh_user`
+    </sql>
+
+    <sql id="values">
+
+        #{name},
+        #{phone},
+        #{email},
+        #{password},
+        #{type},
+        #{sex},
+        #{age},
+        #{desc},
+        #{hobby},
+        #{headImg},
+        #{status},
+        #{createdBy},
+        #{updatedBy},
+        NOW(),
+        NOW()
+    </sql>
+
+    <sql id="columns">
+        `name`,
+        `phone`,
+        `email`,
+        `password`,
+        `type`,
+        `sex`,
+        `age`,
+        `desc`,
+        `hobby`,
+        `headImg`,
+        `status`,
+        `created_by`,
+        `updated_by`,
+        `created_at`,
+        `updated_at`
+    </sql>
+
+    <sql id="criteria">
+        <where>
+            <if test="status==null">and status != -2</if>
+        </where>
+
+    </sql>
+
+    <select id="findById" parameterType="long" resultMap="FhUserMap">
+        select id,
+        <include refid="columns"/>
+        from
+        <include refid="table"/>
+        where id = #{id}
+    </select>
+
+
+    <insert id="create" parameterType="FhUser" keyProperty="id" useGeneratedKeys="true">
+        insert into
+        <include refid="table"/>
+        (<include refid="columns"/>)
+        values (<include refid="values"/>)
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        delete from
+        <include refid="table"/>
+        where id = #{id}
+    </delete>
+
+    <select id="count" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM
+        <include refid="table"/>
+        <include refid="criteria"/>
+    </select>
+
+    <!--分页-->
+    <select id="paging" parameterType="map" resultMap="FhUserMap">
+        SELECT id,
+        <include refid="columns"/>
+        FROM
+        <include refid="table"/>
+        <include refid="criteria"/>
+        ORDER BY id DESC limit #{offset},#{limit}
+    </select>
+
+    <update id="update" parameterType="map">
+        UPDATE
+        <include refid="table"/>
+        <set>
+            <if test="headImg != null">`headImg`=#{headImg},</if>
+            <if test="sex != null">`sex`=#{sex},</if>
+            <if test="type != null">`type`=#{type},</if>
+            <if test="createdBy != null">`created_by`=#{createdBy},</if>
+            <if test="password != null">`password`=#{password},</if>
+            <if test="phone != null">`phone`=#{phone},</if>
+            <if test="name != null">`name`=#{name},</if>
+            <if test="updatedBy != null">`updated_by`=#{updatedBy},</if>
+            <if test="email != null">`email`=#{email},</if>
+            <if test="age != null">`age`=#{age},</if>
+            <if test="desc != null">`desc`=#{desc},</if>
+            <if test="hobby != null">`hobby`=#{hobby},</if>
+            <if test="status != null">`status`=#{status},</if>
+            `updated_at` = NOW()
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

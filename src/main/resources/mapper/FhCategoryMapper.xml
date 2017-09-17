@@ -1,0 +1,90 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FhCategory">
+    <resultMap id="FhCategoryMap" type="FhCategory">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="weight" property="weight"/>
+        <result column="desc" property="desc"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <sql id="table">
+        `fh_category`
+    </sql>
+
+    <sql id="values">
+        #{name},
+        #{desc},
+        #{status},
+        #{weight}
+    </sql>
+
+    <sql id="columns">
+        `name`,
+        `desc`,
+        `status`,
+        `weight`
+    </sql>
+
+    <sql id="criteria">
+        <where>
+            <if test="status==null">and status != -2</if>
+        </where>
+
+    </sql>
+
+    <select id="findById" parameterType="long" resultMap="FhCategoryMap">
+        select id,
+        <include refid="columns"/>
+        from
+        <include refid="table"/>
+        where id = #{id}
+    </select>
+
+    <insert id="create" parameterType="FhCategory" keyProperty="id" useGeneratedKeys="true">
+        insert into
+        <include refid="table"/>
+        (<include refid="columns"/>)
+        values (<include refid="values"/>)
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        delete from
+        <include refid="table"/>
+        where id = #{id}
+    </delete>
+
+    <select id="count" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM
+        <include refid="table"/>
+        <include refid="criteria"/>
+    </select>
+
+    <!--分页-->
+    <select id="paging" parameterType="map" resultMap="FhCategoryMap">
+        SELECT id,
+        <include refid="columns"/>
+        FROM
+        <include refid="table"/>
+        <include refid="criteria"/>
+        ORDER BY id DESC limit #{offset},#{limit}
+    </select>
+
+
+    <update id="update" parameterType="map">
+        UPDATE
+        <include refid="table"/>
+        <set>
+            <if test="name != null">`name`=#{name},</if>
+            <if test="weight != null">`weight`=#{weight},</if>
+            <if test="desc != null">`desc`=#{desc},</if>
+            <if test="status != null">`status`=#{status},</if>
+            `updated_at` = NOW()
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

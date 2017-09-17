@@ -1,0 +1,132 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FhArticle">
+    <resultMap id="FhArticleMap" type="FhArticle">
+        <id column="id" property="id"/>
+                <result column="tag_ids" property="tagIds"/>
+                <result column="coverImg" property="coverImg"/>
+                <result column="title" property="title"/>
+                <result column="created_by" property="createdBy"/>
+                <result column="content" property="content"/>
+                <result column="is_top" property="isTop"/>
+                <result column="hits" property="hits"/>
+                <result column="user_id" property="userId"/>
+                <result column="updated_by" property="updatedBy"/>
+                <result column="category_ids" property="categoryIds"/>
+                <result column="desc" property="desc"/>
+                <result column="status" property="status"/>
+                <result property="createdBy" column="created_by"/>
+                <result property="updatedBy" column="updated_by"/>
+                <result property="createdAt" column="created_at"/>
+                <result property="updatedAt" column="updated_at"/>
+            </resultMap>
+
+    <sql id="table">
+        `fh_article`
+    </sql>
+
+    <sql id="values">
+                #{userId},
+                #{title},
+                #{desc},
+                #{content},
+                #{coverImg},
+                #{categoryIds},
+                #{tagIds},
+                #{status},
+                #{isTop},
+                #{hits},
+                #{createdBy},
+                #{updatedBy},
+                NOW(),
+        NOW()
+    </sql>
+
+    <sql id="columns">
+        `user_id`,
+        `title`,
+        `desc`,
+        `content`,
+        `coverImg`,
+        `category_ids`,
+        `tag_ids`,
+        `status`,
+        `is_top`,
+        `hits`,
+        `created_by`,
+        `updated_by`,
+        `created_at`,
+        `updated_at`
+    </sql>
+
+    <sql id="criteria">
+       <where>
+           <if test="status==null">and status != -2</if>
+       </where>
+
+    </sql>
+
+
+    <select id="findById" parameterType="long" resultMap="FhArticleMap">
+        select id,
+        <include refid="columns"/>
+        from
+        <include refid="table"/>
+        where id = #{id}
+    </select>
+
+
+    <insert id="create" parameterType="FhArticle" keyProperty="id" useGeneratedKeys="true">
+        insert into
+        <include refid="table"/>
+        (<include refid="columns"/>)
+        values (<include refid="values"/>)
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        delete from
+        <include refid="table"/>
+        where id = #{id}
+    </delete>
+
+    <select id="count" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM
+        <include refid="table"/>
+        <include refid="criteria"/>
+    </select>
+
+    <!--分页-->
+    <select id="paging" parameterType="map" resultMap="FhArticleMap">
+        SELECT id,
+        <include refid="columns"/>
+        FROM
+        <include refid="table"/>
+        <include refid="criteria"/>
+        ORDER BY id DESC limit #{offset},#{limit}
+    </select>
+
+    <update id="update" parameterType="FhArticle">
+        UPDATE
+        <include refid="table"/>
+        <set>
+            <if test="tagIds != null">`tag_ids`=#{tagIds},</if>
+            <if test="coverImg != null">`coverImg`=#{coverImg},</if>
+            <if test="title != null">`title`=#{title},</if>
+            <if test="createdBy != null">`created_by`=#{createdBy},</if>
+            <if test="content != null">`content`=#{content},</if>
+            <if test="isTop != null">`is_top`=#{isTop},</if>
+            <if test="hits != null">`hits`=#{hits},</if>
+            <if test="userId != null">`user_id`=#{userId},</if>
+            <if test="isDel != null">`is_del`=#{isDel},</if>
+            <if test="updatedBy != null">`updated_by`=#{updatedBy},</if>
+            <if test="categoryIds != null">`category_ids`=#{categoryIds},</if>
+            <if test="desc != null">`desc`=#{desc},</if>
+            <if test="status != null">`status`=#{status},</if>
+            `updated_at` = NOW()
+        </set>
+        where id=#{id}
+    </update>
+
+</mapper>

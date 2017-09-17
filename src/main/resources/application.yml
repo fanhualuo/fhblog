@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/test1?useUnicode=true&characterEncoding=UTF8
+    url: jdbc:mysql://127.0.0.1:3306/fhblog?useUnicode=true&characterEncoding=UTF8
     username: root
-    password: anywhere
+    password: 123456
 
 mybatis:
   type-aliases-package: com.hehe.fhblog.model

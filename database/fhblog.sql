@@ -1,9 +1,29 @@
 
-CREATE TABLE `fh_blog_article` (
+CREATE TABLE `fh_user` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL COMMENT '用户名',
+  `phone` varchar(32) NOT NULL COMMENT '手机',
+  `email` varchar(32) NOT NULL COMMENT '邮箱',
+  `password` varchar(32) NOT NULL COMMENT '32位加密密码',
+  `type` smallint(1) DEFAULT b'0' COMMENT '类型(管理员1，用户0....)',
+  `sex` smallint(1) DEFAULT  NULL COMMENT '性别',
+  `age` smallint(1) DEFAULT  NULL COMMENT '姓名',
+  `desc` varchar(200) DEFAULT NULL COMMENT '个人简介',
+  `hobby` varchar(100) DEFAULT NULL COMMENT '爱好',
+  `headImg` varchar(100) DEFAULT NULL COMMENT '头像',
+  `status` smallint(1) DEFAULT NULL COMMENT '状态(启用1，删除0，停用2，冻结3)',
+  `created_by` varchar(32) DEFAULT NULL,
+  `updated_by` varchar(32) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+CREATE TABLE `fh_article` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL COMMENT 'fh_blog_user.id',
   `title` varchar(100) NOT NULL COMMENT '标题',
-  `description` varchar(1024) DEFAULT NULL COMMENT '概要',
+  `desc` varchar(1024) DEFAULT NULL COMMENT '概要',
   `content` text COMMENT '内容',
   `coverImg` varchar(100) DEFAULT NULL COMMENT '封面',
   `category_ids` varchar(40) DEFAULT NULL COMMENT '类别id,多个,用/分开',
@@ -18,183 +38,28 @@ CREATE TABLE `fh_blog_article` (
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fh_blog_user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章内容表';
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COMMENT='文章内容表';
 
-CREATE TABLE `fh_blog_user` (
+CREATE TABLE `fh_category` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL COMMENT '用户名',
-  `phone` varchar(32) NOT NULL COMMENT '手机',
-  `email` varchar(32) NOT NULL COMMENT '邮箱',
-  `passwd` varchar(32) NOT NULL COMMENT '32位加密密码',
-  `type` smallint(1) DEFAULT b'0' COMMENT '类型(管理员1，用户0....)',
-  `sex` smallint(1) DEFAULT  NULL COMMENT '性别',
-  `age` smallint(1) DEFAULT  NULL COMMENT '姓名',
-  `description` varchar(200) DEFAULT NULL COMMENT '个人简介',
-  `hobby` varchar(100) DEFAULT NULL COMMENT '爱好',
-  `headImg` varchar(100) DEFAULT NULL COMMENT '头像',
-  `status` smallint(1) DEFAULT NULL COMMENT '状态(启用1，删除0，停用2，冻结3)',
-  `created_by` varchar(32) DEFAULT NULL,
-  `updated_by` varchar(32) DEFAULT NULL,
+  `name` varchar(32) NOT NULL COMMENT '名称',
+  `desc` varchar(256) DEFAULT NULL COMMENT '描述',
+  `status` smallint(1) DEFAULT NULL COMMENT '状态，0|null正常',
+  `weight` int(6) DEFAULT NULL COMMENT '权重（从大到小)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COMMENT='文章分类表';
+
+CREATE TABLE `fh_comments` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `article_id`  bigint(20) DEFAULT  NULL COMMENT 'fh_article.id',
+  `user_id`  bigint(20) DEFAULT  NULL COMMENT 'fh_user.id',
+  `block_id` int(6) DEFAULT NULL COMMENT'评论所在位置',
+  `pid` bigint(20) DEFAULT  NULL COMMENT '评论父id',
+  `content` varchar(600) DEFAULT NULL COMMENT '内容',
+  `is_del` bit(1) DEFAULT b'0' COMMENT '删除',
+  `user_type` int(1) DEFAULT  NULL COMMENT '评论类别（1作者，2访客）',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fh_blog_user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
-
--- ----------------------------
--- Records of t_authors
--- ----------------------------
-
--- ----------------------------
--- Table structure for `t_category`
--- ----------------------------
-DROP TABLE IF EXISTS `t_category`;
-CREATE TABLE `t_category` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `description` varchar(500) DEFAULT NULL COMMENT '描述',
-  `name` varchar(30) NOT NULL COMMENT '名称',
-  `status` tinyint(1) DEFAULT '0' COMMENT '展示状态',
-  `code` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `category_code` (`code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_category
--- ----------------------------
-
--- ----------------------------
--- Table structure for `t_friendlink`
--- ----------------------------
-DROP TABLE IF EXISTS `t_friendlink`;
-CREATE TABLE `t_friendlink` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) NOT NULL,
-  `description` varchar(300) DEFAULT NULL,
-  `website` varchar(60) NOT NULL,
-  `hits` int(10) DEFAULT '0',
-  `priority` int(2) DEFAULT NULL,
-  `web_author_name` varchar(20) DEFAULT NULL,
-  `web_author_email` varchar(30) DEFAULT NULL,
-  `add_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_friendlink
--- ----------------------------
-
--- ----------------------------
--- Table structure for `t_guest`
--- ----------------------------
-DROP TABLE IF EXISTS `t_guest`;
-CREATE TABLE `t_guest` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `email` varchar(30) DEFAULT NULL COMMENT '通讯邮箱',
-  `nickname` varchar(30) NOT NULL COMMENT '昵称',
-  `personal_website` varchar(50) DEFAULT NULL COMMENT '个人网址',
-  `access_ip` varchar(30) DEFAULT NULL COMMENT '访问IP',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_guest
--- ----------------------------
-
-
--- ----------------------------
--- Table structure for `t_message`
--- ----------------------------
-DROP TABLE IF EXISTS `t_message`;
-CREATE TABLE `t_message` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(10) DEFAULT NULL COMMENT '父id',
-  `content` varchar(600) NOT NULL COMMENT '内容',
-  `user_type` int(1) NOT NULL COMMENT '留言作者类别（author作者，guest访客）',
-  `author_id` int(10) NOT NULL COMMENT '作者id',
-  `article_id` int(10) NOT NULL COMMENT '所属文章id',
-  `pub_time` datetime DEFAULT NULL COMMENT '发表时间',
-  `block_id` int(10) DEFAULT NULL COMMENT '所在文章的评论区域属于第几块',
-  `support_count` int(10) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_message
--- ----------------------------
-
-
--- ----------------------------
--- Table structure for `t_project`
--- ----------------------------
-DROP TABLE IF EXISTS `t_project`;
-CREATE TABLE `t_project` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `introduction` varchar(1000) DEFAULT NULL,
-  `article_url` varchar(200) DEFAULT NULL,
-  `down_url` varchar(100) DEFAULT NULL,
-  `hits` int(10) DEFAULT NULL,
-  `pub_time` datetime DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_project
--- ----------------------------
-
--- ----------------------------
--- Table structure for `t_recommend`
--- ----------------------------
-DROP TABLE IF EXISTS `t_recommend`;
-CREATE TABLE `t_recommend` (
-  `id` bigint(18) NOT NULL AUTO_INCREMENT,
-  `title` varchar(150) DEFAULT NULL COMMENT '标题',
-  `has_content` int(1) DEFAULT '0' COMMENT '是否包含内容',
-  `article_url` varchar(300) DEFAULT NULL COMMENT '文章对应的url',
-  `content_id` int(10) DEFAULT NULL COMMENT '对应的内容id，前提为has_content为true，即1',
-  `hits` int(10) DEFAULT '0' COMMENT '点击量',
-  `pub_time` datetime DEFAULT NULL COMMENT '发布时间',
-  `summary` varchar(300) DEFAULT NULL COMMENT '简要说明',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_recommend
--- ----------------------------
-
-
--- ----------------------------
--- Table structure for `t_security_question`
--- ----------------------------
-DROP TABLE IF EXISTS `t_security_question`;
-CREATE TABLE `t_security_question` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_type` int(1) NOT NULL COMMENT '用户类别（管理员，作者）',
-  `question01` varchar(30) NOT NULL,
-  `answer01` varchar(20) NOT NULL,
-  `question02` varchar(30) DEFAULT NULL,
-  `answer02` varchar(20) DEFAULT NULL,
-  `question03` varchar(30) DEFAULT NULL,
-  `answer03` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_security_question
--- ----------------------------
-
--- ----------------------------
--- Table structure for `t_tag`
--- ----------------------------
-DROP TABLE IF EXISTS `t_tag`;
-CREATE TABLE `t_tag` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL COMMENT '标签名称',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_tag
--- ----------------------------
+  KEY `idx_fh_article_id` (`article_id`),
+  KEY `idx_fh_user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='文章评论表';

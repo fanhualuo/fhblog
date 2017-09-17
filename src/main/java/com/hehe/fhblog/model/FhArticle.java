@@ -2,6 +2,7 @@ package com.hehe.fhblog.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,11 +12,12 @@ import java.util.Date;
  * Author: xieqinghe .
  */
 @Data
-public class Article {
+public class FhArticle implements Serializable{
+    private static final long serialVersionUID = 5063472222098739835L;
     private Long id;
     private Long userId;
     private String title;//标题
-    private String description;//描述,概要
+    private String desc;//描述,概要
     private String content;//内容
     private String coverImg;//封面
     private Integer categoryIds;//类别id
@@ -23,7 +25,6 @@ public class Article {
     private Integer status;//文章状态：0草稿，1博文，
     private Integer isTop;//置顶1，加精2，正常0
     private int hits;//点击数
-    private Boolean isDel;//是否删除
     private Long createdBy;    //创建人
     private Long updatedBy;    //修改人
     private Date createdAt;    //创建时间
