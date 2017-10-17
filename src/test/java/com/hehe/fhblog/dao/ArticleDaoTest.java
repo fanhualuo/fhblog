@@ -1,6 +1,6 @@
 package com.hehe.fhblog.dao;
 
-import com.hehe.fhblog.model.FhArticle;
+import com.hehe.fhblog.model.Article;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +17,24 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FhArticleDaoTest {
+public class ArticleDaoTest {
 
     @Autowired
-    FhArticleDao fhArticleDao;
+    ArticleDao articleDao;
     @Test
     public void create() throws Exception {
-        FhArticle fhArticle=new FhArticle();
-        fhArticle.setUserId(100l);
-        fhArticle.setTitle("今天天气很好");
+        Article article =new Article();
+        article.setUserId(100l);
+        article.setTitle("今天天气很好");
 
-        assertTrue(fhArticleDao.create(fhArticle));
+        assertTrue(articleDao.create(article));
 
     }
 
     @Test
     public void delete() throws Exception {
 
-        assertTrue(fhArticleDao.delete(101l));
+        assertTrue(articleDao.delete(101l));
     }
 
     @Test

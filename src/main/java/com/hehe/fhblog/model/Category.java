@@ -11,7 +11,7 @@ import java.io.Serializable;
  * Author: xieqinghe .
  */
 @Data
-public class FhCategory implements Serializable {
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 8888785780880511046L;
     private Integer id;

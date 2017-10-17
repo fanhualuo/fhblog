@@ -1,13 +1,12 @@
 package com.hehe.fhblog;
 
 import com.hehe.common.util.Encryption;
-import com.hehe.fhblog.dao.FhUserDao;
-import com.hehe.fhblog.model.FhUser;
+import com.hehe.fhblog.dao.UserDao;
+import com.hehe.fhblog.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static junit.framework.Assert.assertTrue;
@@ -17,11 +16,11 @@ import static junit.framework.Assert.assertTrue;
 public class FhblogApplicationTests {
 
 	@Autowired
-	FhUserDao fhUserDao;
+    UserDao userDao;
 	@Test
 	public void contextLoads() {
-		System.out.println(fhUserDao);
-		FhUser user=new FhUser();
+		System.out.println(userDao);
+		User user=new User();
 		user.setName("xieqinghe");
 		user.setPhone("15854026443");
 		user.setEmail("qinghe101@qq.com");
@@ -29,17 +28,17 @@ public class FhblogApplicationTests {
 		user.setStatus(1);
 		user.setPassword(Encryption.encrypt("123456"));
 
-		assertTrue(fhUserDao.create(user));
+		assertTrue(userDao.create(user));
 	}
 
 	@Test
 	public void find(){
-		System.out.println(fhUserDao.findById(100l));
+		System.out.println(userDao.findById(100l));
 	}
 
 	@Test
 	public void delete(){
-		assertTrue(fhUserDao.delete(101l));
+		assertTrue(userDao.delete(101l));
 	}
 
 

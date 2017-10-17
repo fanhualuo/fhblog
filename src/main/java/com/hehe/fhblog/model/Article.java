@@ -12,7 +12,7 @@ import java.util.Date;
  * Author: xieqinghe .
  */
 @Data
-public class FhArticle implements Serializable{
+public class Article implements Serializable{
     private static final long serialVersionUID = 5063472222098739835L;
     private Long id;
     private Long userId;

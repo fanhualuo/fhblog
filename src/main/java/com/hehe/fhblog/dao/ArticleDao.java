@@ -1,7 +1,7 @@
 package com.hehe.fhblog.dao;
 
 import com.hehe.common.mysql.dao.MyBatisDao;
-import com.hehe.fhblog.model.FhArticle;
+import com.hehe.fhblog.model.Article;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * Author: hehe
  */
 @Repository
-public class FhArticleDao extends MyBatisDao<FhArticle>{
+public class ArticleDao extends MyBatisDao<Article>{
 }

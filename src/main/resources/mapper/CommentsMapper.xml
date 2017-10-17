@@ -1,31 +1,40 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="FhCategory">
-    <resultMap id="FhCategoryMap" type="FhCategory">
+<mapper namespace="Comments">
+    <resultMap id="CommentsMap" type="Comments">
         <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="weight" property="weight"/>
-        <result column="desc" property="desc"/>
-        <result column="status" property="status"/>
+        <result column="article_id" property="articleId"/>
+        <result column="user_type" property="userType"/>
+        <result column="user_id" property="userId"/>
+        <result column="pid" property="pid"/>
+        <result column="block_id" property="blockId"/>
+        <result column="content" property="content"/>
+        <result property="createdAt" column="created_at"/>
     </resultMap>
 
     <sql id="table">
-        `fh_category`
+        `fh_comments`
     </sql>
 
     <sql id="values">
-        #{name},
-        #{desc},
-        #{status},
-        #{weight}
+        #{articleId},
+        #{userId},
+        #{blockId},
+        #{pid},
+        #{content},
+        #{userType},
+        NOW()
     </sql>
 
     <sql id="columns">
-        `name`,
-        `desc`,
-        `status`,
-        `weight`
+        `article_id`,
+        `user_id`,
+        `block_id`,
+        `pid`,
+        `content`,
+        `user_type`,
+        `created_at`
     </sql>
 
     <sql id="criteria">
@@ -35,7 +44,7 @@
 
     </sql>
 
-    <select id="findById" parameterType="long" resultMap="FhCategoryMap">
+    <select id="findById" parameterType="long" resultMap="CommentsMap">
         select id,
         <include refid="columns"/>
         from
@@ -43,7 +52,8 @@
         where id = #{id}
     </select>
 
-    <insert id="create" parameterType="FhCategory" keyProperty="id" useGeneratedKeys="true">
+
+    <insert id="create" parameterType="Comments" keyProperty="id" useGeneratedKeys="true">
         insert into
         <include refid="table"/>
         (<include refid="columns"/>)
@@ -64,7 +74,7 @@
     </select>
 
     <!--分页-->
-    <select id="paging" parameterType="map" resultMap="FhCategoryMap">
+    <select id="paging" parameterType="map" resultMap="CommentsMap">
         SELECT id,
         <include refid="columns"/>
         FROM
@@ -73,15 +83,16 @@
         ORDER BY id DESC limit #{offset},#{limit}
     </select>
 
-
     <update id="update" parameterType="map">
         UPDATE
         <include refid="table"/>
         <set>
-            <if test="name != null">`name`=#{name},</if>
-            <if test="weight != null">`weight`=#{weight},</if>
-            <if test="desc != null">`desc`=#{desc},</if>
-            <if test="status != null">`status`=#{status},</if>
+            <if test="articleId != null">`article_id`=#{articleId},</if>
+            <if test="userType != null">`user_type`=#{userType},</if>
+            <if test="userId != null">`user_id`=#{userId},</if>
+            <if test="pid != null">`pid`=#{pid},</if>
+            <if test="blockId != null">`block_id`=#{blockId},</if>
+            <if test="content != null">`content`=#{content},</if>
             `updated_at` = NOW()
         </set>
         where id = #{id}

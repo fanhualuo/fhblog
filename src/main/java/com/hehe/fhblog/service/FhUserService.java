@@ -3,9 +3,8 @@ package com.hehe.fhblog.service;
 import com.hehe.common.model.Paging;
 import com.hehe.common.model.Response;
 import com.hehe.fhblog.enums.LoginType;
-import com.hehe.fhblog.model.FhUser;
+import com.hehe.fhblog.model.User;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +24,7 @@ public interface FhUserService {
      * @param type    登录类型
      * @return
      **/
-    Response<FhUser>  login(String loginBy, String passwd,LoginType type);
+    Response<User>  login(String loginBy, String passwd, LoginType type);
 
     /**
      * 通过 ID 查询用户
@@ -33,7 +32,7 @@ public interface FhUserService {
      * @param id 用户 ID
      * @return 用户
      */
-    Response<FhUser> findById(long id);
+    Response<User> findById(long id);
 
     /**
      * 通过用户名查询用户
@@ -41,7 +40,7 @@ public interface FhUserService {
      * @param name 用户名
      * @return 用户
      */
-    Response<FhUser> findByNickname(String name);
+    Response<User> findByNickname(String name);
 
     /**
      * 分页查询用户
@@ -50,7 +49,7 @@ public interface FhUserService {
      * @param criteria 查询条件
      * @return 用户分页对象
      */
-    Response<Paging<FhUser>> pagingForAdmin(Integer pageNo, Integer pageSize, Map<String, Object> criteria);
+    Response<Paging<User>> pagingForAdmin(Integer pageNo, Integer pageSize, Map<String, Object> criteria);
 
     //读服务 end////////////////
 
@@ -91,7 +90,7 @@ public interface FhUserService {
      * @param user 用户
      * @return 是否成功
      */
-    Response<Boolean> updateUser(FhUser user);
+    Response<Boolean> updateUser(User user);
 
 
 }

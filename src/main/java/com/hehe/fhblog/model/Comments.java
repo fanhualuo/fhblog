@@ -13,11 +13,11 @@ import java.util.Date;
  * Author: hehe
  */
 @Data
-public class FhComments implements Serializable {
+public class Comments implements Serializable {
     private static final long serialVersionUID = 8132286464469754496L;
     private Long id; //
-    private Long articleId; //fh_article.id
-    private Long userId; //fh_user.id
+    private Long articleId; //article.id
+    private Long userId; //user.id
     private Integer blockId; //评论所在位置
     private Long pid; //评论父id
     private String content; //内容

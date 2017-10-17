@@ -1,6 +1,6 @@
 package com.hehe.fhblog.dao;
 
-import com.hehe.fhblog.model.FhComments;
+import com.hehe.fhblog.model.Category;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +11,23 @@ import static org.junit.Assert.*;
 
 /**
  * Date: 2017/9/17
- * Time: 2:35
+ * Time: 2:27
  * email: qinghe101@qq.com
  * Author: hehe
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FhCommentsDaoTest {
+public class CategoryDaoTest {
     @Autowired
-    FhCommentsDao fhCommentsDao;
+    CategoryDao categoryDao;
     @Test
     public void create() throws Exception {
-        FhComments comments=new FhComments();
-        comments.setArticleId(100l);
-        comments.setUserId(100l);
-        comments.setBlockId(1);
-        comments.setContent("新加评论");
-        comments.setPid(1l);
-        comments.setUserType(1);
-        assertTrue(fhCommentsDao.create(comments));
+        Category category=new Category();
+        category.setDesc("文章分类描述");
+        category.setName("分类名称");
+        category.setStatus(0);
+        category.setWeight(100);
+        assertTrue(categoryDao.create(category));
     }
 
 }

@@ -45,6 +45,8 @@ CREATE TABLE `fh_category` (
   `name` varchar(32) NOT NULL COMMENT '名称',
   `desc` varchar(256) DEFAULT NULL COMMENT '描述',
   `status` smallint(1) DEFAULT NULL COMMENT '状态，0|null正常',
+  `pid` bigint(20) DEFAULT  NULL COMMENT '父id',
+  `level` int(6) DEFAULT NULL COMMENT ' 深度(1开始)',
   `weight` int(6) DEFAULT NULL COMMENT '权重（从大到小)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COMMENT='文章分类表';

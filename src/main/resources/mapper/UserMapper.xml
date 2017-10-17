@@ -1,20 +1,21 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="FhArticle">
-    <resultMap id="FhArticleMap" type="FhArticle">
+<mapper namespace="User">
+    <resultMap id="UserMap" type="User">
         <id column="id" property="id"/>
-                <result column="tag_ids" property="tagIds"/>
-                <result column="coverImg" property="coverImg"/>
-                <result column="title" property="title"/>
+                <result column="headImg" property="headImg"/>
+                <result column="sex" property="sex"/>
+                <result column="type" property="type"/>
                 <result column="created_by" property="createdBy"/>
-                <result column="content" property="content"/>
-                <result column="is_top" property="isTop"/>
-                <result column="hits" property="hits"/>
-                <result column="user_id" property="userId"/>
+                <result column="password" property="password"/>
+                <result column="phone" property="phone"/>
+                <result column="name" property="name"/>
                 <result column="updated_by" property="updatedBy"/>
-                <result column="category_ids" property="categoryIds"/>
+                <result column="email" property="email"/>
+                <result column="age" property="age"/>
                 <result column="desc" property="desc"/>
+                <result column="hobby" property="hobby"/>
                 <result column="status" property="status"/>
                 <result property="createdBy" column="created_by"/>
                 <result property="updatedBy" column="updated_by"/>
@@ -23,37 +24,40 @@
             </resultMap>
 
     <sql id="table">
-        `fh_article`
+        `fh_user`
     </sql>
 
     <sql id="values">
-                #{userId},
-                #{title},
-                #{desc},
-                #{content},
-                #{coverImg},
-                #{categoryIds},
-                #{tagIds},
-                #{status},
-                #{isTop},
-                #{hits},
-                #{createdBy},
-                #{updatedBy},
-                NOW(),
+
+        #{name},
+        #{phone},
+        #{email},
+        #{password},
+        #{type},
+        #{sex},
+        #{age},
+        #{desc},
+        #{hobby},
+        #{headImg},
+        #{status},
+        #{createdBy},
+        #{updatedBy},
+        NOW(),
         NOW()
     </sql>
 
     <sql id="columns">
-        `user_id`,
-        `title`,
+        `name`,
+        `phone`,
+        `email`,
+        `password`,
+        `type`,
+        `sex`,
+        `age`,
         `desc`,
-        `content`,
-        `coverImg`,
-        `category_ids`,
-        `tag_ids`,
+        `hobby`,
+        `headImg`,
         `status`,
-        `is_top`,
-        `hits`,
         `created_by`,
         `updated_by`,
         `created_at`,
@@ -61,14 +65,13 @@
     </sql>
 
     <sql id="criteria">
-       <where>
-           <if test="status==null">and status != -2</if>
-       </where>
+        <where>
+            <if test="status==null">and status != -2</if>
+        </where>
 
     </sql>
 
-
-    <select id="findById" parameterType="long" resultMap="FhArticleMap">
+    <select id="findById" parameterType="long" resultMap="UserMap">
         select id,
         <include refid="columns"/>
         from
@@ -77,7 +80,7 @@
     </select>
 
 
-    <insert id="create" parameterType="FhArticle" keyProperty="id" useGeneratedKeys="true">
+    <insert id="create" parameterType="User" keyProperty="id" useGeneratedKeys="true">
         insert into
         <include refid="table"/>
         (<include refid="columns"/>)
@@ -98,7 +101,7 @@
     </select>
 
     <!--分页-->
-    <select id="paging" parameterType="map" resultMap="FhArticleMap">
+    <select id="paging" parameterType="map" resultMap="UserMap">
         SELECT id,
         <include refid="columns"/>
         FROM
@@ -107,26 +110,26 @@
         ORDER BY id DESC limit #{offset},#{limit}
     </select>
 
-    <update id="update" parameterType="FhArticle">
+    <update id="update" parameterType="map">
         UPDATE
         <include refid="table"/>
         <set>
-            <if test="tagIds != null">`tag_ids`=#{tagIds},</if>
-            <if test="coverImg != null">`coverImg`=#{coverImg},</if>
-            <if test="title != null">`title`=#{title},</if>
+            <if test="headImg != null">`headImg`=#{headImg},</if>
+            <if test="sex != null">`sex`=#{sex},</if>
+            <if test="type != null">`type`=#{type},</if>
             <if test="createdBy != null">`created_by`=#{createdBy},</if>
-            <if test="content != null">`content`=#{content},</if>
-            <if test="isTop != null">`is_top`=#{isTop},</if>
-            <if test="hits != null">`hits`=#{hits},</if>
-            <if test="userId != null">`user_id`=#{userId},</if>
-            <if test="isDel != null">`is_del`=#{isDel},</if>
+            <if test="password != null">`password`=#{password},</if>
+            <if test="phone != null">`phone`=#{phone},</if>
+            <if test="name != null">`name`=#{name},</if>
             <if test="updatedBy != null">`updated_by`=#{updatedBy},</if>
-            <if test="categoryIds != null">`category_ids`=#{categoryIds},</if>
+            <if test="email != null">`email`=#{email},</if>
+            <if test="age != null">`age`=#{age},</if>
             <if test="desc != null">`desc`=#{desc},</if>
+            <if test="hobby != null">`hobby`=#{hobby},</if>
             <if test="status != null">`status`=#{status},</if>
             `updated_at` = NOW()
         </set>
-        where id=#{id}
+        where id = #{id}
     </update>
 
 </mapper>
