@@ -1,4 +1,4 @@
-package com.hehe.mail;
+package com.hehe.common.mail;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;

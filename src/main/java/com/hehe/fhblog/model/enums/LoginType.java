@@ -2,7 +2,7 @@
  * Copyright (c) 2014 杭州端点网络科技有限公司
  */
 
-package com.hehe.fhblog.enums;
+package com.hehe.fhblog.model.enums;
 
 /**
  * 登录类型

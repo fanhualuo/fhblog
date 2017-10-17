@@ -2,7 +2,7 @@ package com.hehe.fhblog.service;
 
 import com.hehe.common.model.Paging;
 import com.hehe.common.model.Response;
-import com.hehe.fhblog.enums.LoginType;
+import com.hehe.fhblog.model.enums.LoginType;
 import com.hehe.fhblog.model.User;
 
 import java.util.Map;
