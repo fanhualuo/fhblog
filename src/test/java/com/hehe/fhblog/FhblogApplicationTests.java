@@ -2,7 +2,7 @@ package com.hehe.fhblog;
 
 import com.hehe.common.util.Encryption;
 import com.hehe.fhblog.dao.UserDao;
-import com.hehe.fhblog.model.User;
+import com.hehe.fhblog.model.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

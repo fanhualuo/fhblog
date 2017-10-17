@@ -1,7 +1,7 @@
 package com.hehe.fhblog.dao;
 
 import com.hehe.common.mysql.dao.MyBatisDao;
-import com.hehe.fhblog.model.User;
+import com.hehe.fhblog.model.entity.User;
 import org.springframework.stereotype.Repository;
 
 /**

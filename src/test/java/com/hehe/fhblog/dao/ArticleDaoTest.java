@@ -1,6 +1,6 @@
 package com.hehe.fhblog.dao;
 
-import com.hehe.fhblog.model.Article;
+import com.hehe.fhblog.model.entity.Article;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

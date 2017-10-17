@@ -1,4 +1,4 @@
-package com.hehe.fhblog.model;
+package com.hehe.fhblog.model.entity;
 
 import lombok.Data;
 
@@ -33,4 +33,6 @@ public class User implements Serializable {
     private Long updatedBy;    //修改人
     private Date createdAt;     // 创建时间
     private Date updatedAt;     // 更新时间
+
+
 }

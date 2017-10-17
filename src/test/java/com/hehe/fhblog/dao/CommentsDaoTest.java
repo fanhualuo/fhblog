@@ -1,6 +1,6 @@
 package com.hehe.fhblog.dao;
 
-import com.hehe.fhblog.model.Comments;
+import com.hehe.fhblog.model.entity.Comments;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
