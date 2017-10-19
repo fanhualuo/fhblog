@@ -35,12 +35,12 @@ public class BlogController {
      * @return
      */
     @GetMapping("")
-    public String pagingArticle(@RequestParam(value = "pageNo") Integer pageNo,
+    public Paging<Article> pagingArticle(@RequestParam(value = "pageNo") Integer pageNo,
                                   @RequestParam(value = "pageSize") Integer pageSize,
                                   Map<String, Object> criteria){
 
         Paging<Article> paging=RespHelper.or500(articleService.pagingArticle(pageNo, pageSize, criteria));
-        return "index";
+        return paging;
     }
 
 

@@ -98,7 +98,7 @@
     </update>
 
     <!-- 按照id删除，删除子评论-->
-    <update id="deleteByArticleId" parameterType="long">
+    <update id="deleteById" parameterType="long">
         UPDATE
         <include refid="table"/>
         <set>

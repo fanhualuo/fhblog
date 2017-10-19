@@ -17,31 +17,31 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainController {
 
 
-    @GetMapping("/")
-    public String root(){
-        return "redirect:/index";
-    }
-
-    @GetMapping("/index")
-    public String index(){
-        return "index";
-    }
-
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
-
-    @GetMapping("/login-error")
-    public String loginError(){
-        //登陆失败
-        return "login";
-    }
-
-    @GetMapping("/register")
-    public String register(){
-        //注册
-        return "register";
-    }
+//    @GetMapping("/")
+//    public String root(){
+//        return "redirect:/index";
+//    }
+//
+//    @GetMapping("/index")
+//    public String index(){
+//        return "index";
+//    }
+//
+//    @GetMapping("/login")
+//    public String login(){
+//        return "login";
+//    }
+//
+//    @GetMapping("/login-error")
+//    public String loginError(){
+//        //登陆失败
+//        return "login";
+//    }
+//
+//    @GetMapping("/register")
+//    public String register(){
+//        //注册
+//        return "register";
+//    }
 
 }
