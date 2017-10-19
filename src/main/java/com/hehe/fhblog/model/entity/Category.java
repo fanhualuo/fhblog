@@ -1,6 +1,8 @@
 package com.hehe.fhblog.model.entity;
 
+import com.google.common.base.Objects;
 import lombok.Data;
+import lombok.Getter;
 
 import java.io.Serializable;
 
@@ -32,8 +34,28 @@ public class Category implements Serializable {
      * 权重（从大到小）
      */
     private Integer weight;
-    /**
-     * 状态，0正常,1删除
-     */
-    private Integer status;
+
+    public static enum Type{
+        CATEGORY(1, "分类"),
+        TAG(2,"标签");
+
+        @Getter
+        private int value;
+        @Getter
+        private String display;
+        private Type(int value, String display){
+            this.value = value;
+            this.display = display;
+        }
+        public static Category.Type from(int value) {
+            for (Category.Type type1 : Category.Type.values()) {
+                if (Objects.equal(value, type1.value)) {
+                    return type1;
+                }
+            }
+            return null;
+        }
+    }
+
+
 }

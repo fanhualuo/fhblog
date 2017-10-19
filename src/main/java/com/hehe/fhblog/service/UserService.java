@@ -11,9 +11,9 @@ import java.util.Map;
  * Date: 2017/9/17
  * Time: 2:53
  * email: qinghe101@qq.com
- * Author: hehe
+ * @author hehe
  */
-public interface FhUserService {
+public interface UserService {
 
     //读服务
     /**

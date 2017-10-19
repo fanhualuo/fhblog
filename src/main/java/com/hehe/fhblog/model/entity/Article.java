@@ -36,7 +36,7 @@ public class Article implements Serializable{
     /**
      * 类别id
      */
-    private Integer categoryIds;
+    private Integer categoryId;
     /**
      * 标签id,多个用"|"隔开
      */

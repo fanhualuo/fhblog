@@ -13,7 +13,7 @@
                 <result column="hits" property="hits"/>
                 <result column="user_id" property="userId"/>
                 <result column="updated_by" property="updatedBy"/>
-                <result column="category_ids" property="categoryIds"/>
+                <result column="category_id" property="categoryId"/>
                 <result column="desc" property="desc"/>
                 <result column="status" property="status"/>
                 <result property="createdBy" column="created_by"/>
@@ -32,7 +32,7 @@
                 #{desc},
                 #{content},
                 #{coverImg},
-                #{categoryIds},
+                #{categoryId},
                 #{tagIds},
                 #{status},
                 #{isTop},
@@ -49,7 +49,7 @@
         `desc`,
         `content`,
         `coverImg`,
-        `category_ids`,
+        `category_id`,
         `tag_ids`,
         `status`,
         `is_top`,
@@ -62,9 +62,13 @@
 
     <sql id="criteria">
        <where>
-           <if test="status==null">and status != -2</if>
+           ifnull(is_del,0)=0
+           <if test="status!=null">and status = #{status}</if>
+           <if test="isTop!=null">and is_top = #{isTop}</if>
+           <if test="categoryId!=null">and category_id = #{categoryId}</if>
+           <if test="userId!=null">and user_id = #{userId}</if>
        </where>
-
+        ORDER BY is_top desc,updated_at desc
     </sql>
 
 
@@ -97,6 +101,14 @@
         <include refid="criteria"/>
     </select>
 
+    <select id="list" parameterType="map" resultMap="ArticleMap">
+        SELECT id,
+        <include refid="columns"/>
+        FROM
+        <include refid="table"/>
+        <include refid="criteria"/>
+    </select>
+
     <!--分页-->
     <select id="paging" parameterType="map" resultMap="ArticleMap">
         SELECT id,
@@ -104,10 +116,10 @@
         FROM
         <include refid="table"/>
         <include refid="criteria"/>
-        ORDER BY id DESC limit #{offset},#{limit}
+        limit #{offset},#{limit}
     </select>
 
-    <update id="update" parameterType="Article">
+    <update id="update" parameterType="map">
         UPDATE
         <include refid="table"/>
         <set>
@@ -119,14 +131,24 @@
             <if test="isTop != null">`is_top`=#{isTop},</if>
             <if test="hits != null">`hits`=#{hits},</if>
             <if test="userId != null">`user_id`=#{userId},</if>
-            <if test="isDel != null">`is_del`=#{isDel},</if>
+            <!--<if test="isDel != null">`is_del`=#{isDel},</if>-->
             <if test="updatedBy != null">`updated_by`=#{updatedBy},</if>
-            <if test="categoryIds != null">`category_ids`=#{categoryIds},</if>
+            <if test="categoryId != null">`category_id`=#{categoryId},</if>
             <if test="desc != null">`desc`=#{desc},</if>
             <if test="status != null">`status`=#{status},</if>
             `updated_at` = NOW()
         </set>
         where id=#{id}
     </update>
+
+    <update id="deleteTo" parameterType="long">
+        UPDATE
+        <include refid="table"/>
+        <set>
+            is_del=1
+        </set>
+        where id = #{id}
+    </update>
+
 
 </mapper>

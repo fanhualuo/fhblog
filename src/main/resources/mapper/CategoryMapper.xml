@@ -5,9 +5,9 @@
     <resultMap id="CategoryMap" type="Category">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
+        <result column="type" property="type"/>
         <result column="weight" property="weight"/>
         <result column="desc" property="desc"/>
-        <result column="status" property="status"/>
     </resultMap>
 
     <sql id="table">
@@ -16,23 +16,25 @@
 
     <sql id="values">
         #{name},
+        #{type},
         #{desc},
-        #{status},
         #{weight}
     </sql>
 
     <sql id="columns">
         `name`,
+        `type`,
         `desc`,
-        `status`,
         `weight`
     </sql>
 
     <sql id="criteria">
         <where>
-            <if test="status==null">and status != -2</if>
+            ifnull(is_del,0)=0
+            <if test="type!=null">and type = #{type}</if>
+            <if test="name!=null">and name = #{name}</if>
+            ORDER BY weight
         </where>
-
     </sql>
 
     <select id="findById" parameterType="long" resultMap="CategoryMap">
@@ -63,6 +65,14 @@
         <include refid="criteria"/>
     </select>
 
+    <select id="list" parameterType="map" resultMap="CategoryMap">
+        SELECT id,
+        <include refid="columns"/>
+        FROM
+        <include refid="table"/>
+        <include refid="criteria"/>
+    </select>
+
     <!--分页-->
     <select id="paging" parameterType="map" resultMap="CategoryMap">
         SELECT id,
@@ -70,7 +80,7 @@
         FROM
         <include refid="table"/>
         <include refid="criteria"/>
-        ORDER BY id DESC limit #{offset},#{limit}
+        limit #{offset},#{limit}
     </select>
 
 
@@ -81,8 +91,17 @@
             <if test="name != null">`name`=#{name},</if>
             <if test="weight != null">`weight`=#{weight},</if>
             <if test="desc != null">`desc`=#{desc},</if>
-            <if test="status != null">`status`=#{status},</if>
-            `updated_at` = NOW()
+            <if test="type != null">`type`=#{type},</if>
+            <!--<if test="isDel != null">`is_del`=#{isDel},</if>-->
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteTo" parameterType="long">
+        UPDATE
+        <include refid="table"/>
+        <set>
+            is_del=1
         </set>
         where id = #{id}
     </update>

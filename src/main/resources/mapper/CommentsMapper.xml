@@ -9,6 +9,7 @@
         <result column="user_id" property="userId"/>
         <result column="pid" property="pid"/>
         <result column="block_id" property="blockId"/>
+        <result column="ip" property="ip"/>
         <result column="content" property="content"/>
         <result property="createdAt" column="created_at"/>
     </resultMap>
@@ -24,6 +25,7 @@
         #{pid},
         #{content},
         #{userType},
+        #{ip},
         NOW()
     </sql>
 
@@ -34,12 +36,18 @@
         `pid`,
         `content`,
         `user_type`,
-        `created_at`
+        `created_at`,
+        `ip`
     </sql>
 
     <sql id="criteria">
         <where>
-            <if test="status==null">and status != -2</if>
+            ifnull(is_del,0)=0
+            <if test="pid!=null">and pid = #{pid}</if>
+            <if test="articleId!=null">and article_id = #{articleId}</if>
+            <if test="userId!=null">and user_id = #{userId}</if>
+            <if test="blockId!=null">and block_id = #{blockId}</if>
+            <if test="userType!=null">and user_type = #{userType}</if>
         </where>
 
     </sql>
@@ -51,20 +59,6 @@
         <include refid="table"/>
         where id = #{id}
     </select>
-
-
-    <insert id="create" parameterType="Comments" keyProperty="id" useGeneratedKeys="true">
-        insert into
-        <include refid="table"/>
-        (<include refid="columns"/>)
-        values (<include refid="values"/>)
-    </insert>
-
-    <delete id="delete" parameterType="long">
-        delete from
-        <include refid="table"/>
-        where id = #{id}
-    </delete>
 
     <select id="count" parameterType="map" resultType="long">
         SELECT COUNT(1)
@@ -83,19 +77,76 @@
         ORDER BY id DESC limit #{offset},#{limit}
     </select>
 
-    <update id="update" parameterType="map">
+    <!--删除-->
+    <update id="deleteTo" parameterType="long">
         UPDATE
         <include refid="table"/>
         <set>
-            <if test="articleId != null">`article_id`=#{articleId},</if>
-            <if test="userType != null">`user_type`=#{userType},</if>
-            <if test="userId != null">`user_id`=#{userId},</if>
-            <if test="pid != null">`pid`=#{pid},</if>
-            <if test="blockId != null">`block_id`=#{blockId},</if>
-            <if test="content != null">`content`=#{content},</if>
-            `updated_at` = NOW()
+            is_del=1
         </set>
         where id = #{id}
     </update>
+
+    <!-- 按照articleId删除-->
+    <update id="deleteByArticleId" parameterType="long">
+        UPDATE
+        <include refid="table"/>
+        <set>
+            is_del=1
+        </set>
+        where article_id = #{articleId}
+    </update>
+
+    <!-- 按照id删除，删除子评论-->
+    <update id="deleteByArticleId" parameterType="long">
+        UPDATE
+        <include refid="table"/>
+        <set>
+            is_del=1
+        </set>
+        where id = #{id} or
+    </update>
+
+
+    <!--批量删除-->
+    <update id="deleteTos" parameterType="list">
+        UPDATE
+        <include refid="table"/>
+        <set>
+            is_del=1
+        </set>
+        WHERE id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <insert id="create" parameterType="Comments" keyProperty="id" useGeneratedKeys="true">
+        insert into
+        <include refid="table"/>
+        (<include refid="columns"/>)
+        values (<include refid="values"/>)
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        delete from
+        <include refid="table"/>
+        where id = #{id}
+    </delete>
+
+    <!--<update id="update" parameterType="map">-->
+        <!--UPDATE-->
+        <!--<include refid="table"/>-->
+        <!--<set>-->
+            <!--<if test="articleId != null">`article_id`=#{articleId},</if>-->
+            <!--<if test="userType != null">`user_type`=#{userType},</if>-->
+            <!--<if test="userId != null">`user_id`=#{userId},</if>-->
+            <!--<if test="pid != null">`pid`=#{pid},</if>-->
+            <!--<if test="blockId != null">`block_id`=#{blockId},</if>-->
+            <!--<if test="content != null">`content`=#{content},</if>-->
+            <!--`updated_at` = NOW()-->
+        <!--</set>-->
+        <!--where id = #{id}-->
+    <!--</update>-->
 
 </mapper>

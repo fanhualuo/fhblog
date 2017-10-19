@@ -4,6 +4,15 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/fhblog?useUnicode=true&characterEncoding=UTF8
     username: root
     password: anywhere
+  thymeleaf:
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+    encoding: UTF-8
+    content-type: text/html
+    mode: HTML5
+    cache: false
+
 
 mybatis:
   type-aliases-package: com.hehe.fhblog.model
@@ -16,3 +25,4 @@ email:
 
 server:
   port: 8082
+
