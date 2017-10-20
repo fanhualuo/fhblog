@@ -3,8 +3,43 @@
 <head>
     <meta charset="UTF-8" >
     <title>Title</title>
+    <script src="http://libs.baidu.com/jquery/1.7.2/jquery.min.js"></script>
 </head>
 <body>
+<p name="title"></p>
+<p name="desc"></p>
+<p name="content"></p>
+<p name="createdAt"></p>
+
 index page
+
 </body>
 </html>
+<script>
+    $().ready( function() {
+        $.ajax({
+            type: 'GET',
+            url: "/api/blog",
+            data:  {pageNo:1,pageSize:20},
+            async: false,
+            dataType: 'json',
+            success: function (result) {
+                debugger;
+                var aaa=result.data[0];
+                var ccc=aaa.title;
+                debugger;
+                document.getElementsByName("title")[0].innerHTML=result.data[0].title;
+                document.getElementsByName("desc")[0].innerHTML=result.data[0].desc;
+                document.getElementsByName("content")[0].innerHTML=result.data[0].content;
+                document.getElementsByName("createdAt")[0].innerHTML=result.data[0].createdAt;
+//                var ddd=bbb[0];
+//                bbb.value=aaa.title;
+//                ddd.innerHTML=aaa.title;
+                debugger;
+            },
+            error: function () {
+                //
+            }
+        });
+    });
+</script>
