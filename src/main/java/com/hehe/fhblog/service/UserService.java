@@ -2,95 +2,70 @@ package com.hehe.fhblog.service;
 
 import com.hehe.common.model.Paging;
 import com.hehe.common.model.Response;
-import com.hehe.fhblog.model.enums.LoginType;
 import com.hehe.fhblog.model.entity.User;
 
+import java.util.List;
 import java.util.Map;
 
+
 /**
- * Date: 2017/9/17
- * Time: 2:53
- * email: qinghe101@qq.com
- * @author hehe
+ * @author xieqinghe .
+ * @date 2017/11/14 下午4:35
+ * @email xieqinghe@terminus.io
  */
 public interface UserService {
 
-    //读服务
-    /**
-     * 登陆controller
-     * @desc
-     * @param loginBy 手机, 邮箱或用户名
-     * @param passwd  明文密码
-     * @param type    登录类型
-     * @return
-     **/
-    Response<User>  login(String loginBy, String passwd, LoginType type);
+    Response<User> findByIdentity(String identity);
+
+    Response<User> findByPhone(String phone);
+
+    Response<User> findByEmail(String email);
+
+    Response<User> findByUserName(String username);
+
 
     /**
-     * 通过 ID 查询用户
-     *
-     * @param id 用户 ID
-     * @return 用户
+     * 查询
+     * @param id
+     * @return user
      */
-    Response<User> findById(long id);
+    Response<User> findById(Long id);
 
     /**
-     * 通过用户名查询用户
-     *
-     * @param name 用户名
-     * @return 用户
+     * 分页
+     * @param pageNo
+     * @param pageSize
+     * @param criteria
+     * @return Paging<User>
      */
-    Response<User> findByNickname(String name);
+    Response<Paging<User>> paging(Integer pageNo, Integer pageSize, Map<String, Object> criteria);
 
     /**
-     * 分页查询用户
-     * @param pageNo   页号
-     * @param pageSize 分页大小
-     * @param criteria 查询条件
-     * @return 用户分页对象
+     * 列表
+     * @param criteria
+     * @return List<User>
      */
-    Response<Paging<User>> pagingForAdmin(Integer pageNo, Integer pageSize, Map<String, Object> criteria);
-
-    //读服务 end////////////////
-
-
-    //写服务
-    /**
-     * 修改密码
-     *
-     * @param userId      用户id
-     * @param oldPassword 旧密码
-     * @param newPassword 新密码
-     * @return 更新成功返回true, 反之false
-     */
-    Response<Boolean> changePassword(Long userId, String oldPassword,String newPassword);
+    Response<List<User>> list(Map<String, Object> criteria);
 
     /**
-     * 重置用户密码
-     *
-     * @param userId   用户 ID
-     * @param password 新密码
-     * @return 是否重置成功
+     * 创建
+     * @param user
+     * @return Boolean
      */
-    Response<Boolean> resetPassword(long userId, String password);
+    Response<Long> create(User user);
 
     /**
-     * 更改用户类型
-     *
-     * @param uid  用户id
-     * @param type 用户类型
-     * @return 操作是否成功
+     * 更新
+     * @param user
+     * @return Boolean
      */
-    Response<Boolean> changeUserType(Long uid, Integer type);
-
+    Response<Boolean> update(User user);
 
     /**
-     * 更新用户资料
-     *
-     * @param user 用户
-     * @return 是否成功
+     * 删除
+     * @param id
+     * @return Boolean
      */
-    Response<Boolean> updateUser(User user);
-
+    Response<Boolean> delete(Long id);
 
 }

@@ -5,12 +5,10 @@ import com.hehe.fhblog.model.entity.User;
 import org.springframework.stereotype.Repository;
 
 /**
- * Date: 2017/9/17
- * Time: 1:34
- * email: qinghe101@qq.com
- * Author: hehe
+ * @author xieqinghe .
+ * @date 2017/11/14 下午4:49
+ * @email xieqinghe@terminus.io
  */
 @Repository
-public class UserDao extends MyBatisDao<User>{
-
+public class UserDao extends MyBatisDao<User> {
 }
